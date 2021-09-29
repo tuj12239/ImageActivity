@@ -2,10 +2,12 @@ package edu.temple.imageactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.TextureView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,10 +17,13 @@ class MainActivity : AppCompatActivity() {
         val images = getImageArray()
 
         val gridView = findViewById<RecyclerView>(R.id.gridView)
-        val adapter = ImageAdapter(this, images)
+        val text = findViewById<TextView>(R.id.imageLabel) as TextView
+        val image = findViewById<ImageView>(R.id.imageView) as ImageView
+        val adapter = ImageAdapter(this, images, text, image)
+
         gridView.layoutManager = GridLayoutManager(this, 3)
-        findViewById<TextView>(R.id.imageLabel).text = images[0].label
-        findViewById<ImageView>(R.id.imageView).setImageResource(images[0].resource)
+        text.text = images[0].label
+        image.setImageResource(images[0].resource)
         gridView.adapter = adapter
 
     }

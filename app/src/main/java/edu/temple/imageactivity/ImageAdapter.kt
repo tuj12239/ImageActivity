@@ -1,17 +1,23 @@
 package edu.temple.imageactivity
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class ImageAdapter(val _context: Context, _images: Array<ImageClass>) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(val _context: Context, _images: Array<ImageClass>, _text: TextView, _image: ImageView) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     private val context = _context
     private val images = _images
     private val inflater = LayoutInflater.from(context)
+    private val text = _text
+    private val image = _image
 
     class ViewHolder(_view: View) : RecyclerView.ViewHolder(_view) {
         val view = _view
@@ -25,11 +31,13 @@ class ImageAdapter(val _context: Context, _images: Array<ImageClass>) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val gridImage = holder.view.findViewById<ImageView>(R.id.gridImage)
         gridImage.setImageResource(images[position].resource)
-
-        //holder.view.setOnClickListener{changeMainViews(position)}
+        gridImage.setOnClickListener{changeMainViews(position)}
     }
 
-    //private fun changeMainViews(index: Int) {}
+    private fun changeMainViews(index: Int) {
+        text.text = images[index].label
+        image.setImageResource(images[index].resource)
+    }
 
     override fun getItemCount(): Int {
         return images.size
